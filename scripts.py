@@ -6,9 +6,10 @@ from datacenter.models import Schoolkid, Mark, Сhastisement, Lesson, Commendati
 
 
 def fix_marks(schoolkid: Schoolkid):
-    Mark.objects.filter(schoolkid=schoolkid, points__lte=3).update(
-        points=random.randint(4, 5)
-    )
+    negative_marks = Mark.objects.filter(schoolkid=schoolkid, points__lte=3)
+    for negative_mark in negative_marks:
+        negative_mark.points = random.randint(4, 5)
+        negative_mark.save()
 
 
 def remove_chastisements(schoolkid: Schoolkid):
